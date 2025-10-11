@@ -1,0 +1,7 @@
+# format: DFG-IO-Tag, DFG-IO-Name, ADG-IOB-Id, ADG-IOB-Index, DFG-IO-Latency, Spad-Bank
+INPUT_0, Input3, 110, 10, 0, 8
+INPUT_1, Input5, 111, 11, 0, 10
+OUTPUT_2, Output8, 4, 3, 6, 4
+INPUT_3, Input11, 108, 8, 0, 9
+INPUT_4, Input13, 109, 9, 0, 11
+OUTPUT_5, Output16, 2, 1, 6, 5
