@@ -19,12 +19,13 @@ IR1="${PROG_NAME}_gvn.ll"
 IR2="${PROG_NAME}_cdfg.ll"
 
 # Compile C to LLVM IR
-clang-15 -D CGRA_COMPILER -target i386-unknown-linux-gnu -c -emit-llvm -O1 \
-  -fno-tree-vectorize -fno-unroll-loops "${PROG_NAME}.c" -S -o "${IR0}"
+clang-15 -D CGRA_COMPILER -target i386-unknown-linux-gnu -c -emit-llvm -O2 \
+   -mprefer-vector-width=1 -fno-vectorize -fno-tree-vectorize -fno-unroll-loops -fno-discard-value-names  -ffreestanding "${PROG_NAME}.c" -S -o "${IR0}"
 
 # Run standard scalar/loop optimizations (legacy PM style flags)
 opt-15 -mem2reg -memdep -memcpyopt -lcssa -loop-simplify -licm \
-  -loop-deletion -indvars -loop-simplifycfg -simplifycfg -mergereturn -indvars \
+  -loop-deletion -indvars -loop-simplifycfg -simplifycfg -mergereturn -indvars --div-rem-pairs --disable-loop-unrolling --lowerswitch \
+  -gvn \
   "${IR0}" -S -o "${IR1}"
 
 # Load custom CDFG pass and run it using the legacy pass manager
